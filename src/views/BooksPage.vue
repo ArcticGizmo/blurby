@@ -36,6 +36,10 @@ const books = [
     rating: null,
     statuses: ['new'],
   },
+  {
+    title: 'C Book',
+    author: 'S. Wintersmith',
+  },
 ];
 </script>
 

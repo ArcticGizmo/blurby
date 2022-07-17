@@ -49,7 +49,7 @@ const onAction = () => emit('action');
 <style scoped>
 .book-card {
   display: grid;
-  grid-template-columns: 2rem 6rem auto 2rem;
+  grid-template-columns: 2rem 5rem auto 2rem;
   background-color: rgb(224, 224, 224);
   border-radius: 15px;
   height: 6rem;
@@ -68,6 +68,7 @@ const onAction = () => emit('action');
 .picture {
   display: flex;
   flex-direction: column;
+  padding-right: 0.5rem;
 }
 
 .detail {
