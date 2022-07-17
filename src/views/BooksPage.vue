@@ -27,14 +27,14 @@ const books = [
     author: 'J. Applesmith',
     series: null,
     rating: 4,
-    status: null,
+    statuses: ['rented', 'damaged'],
   },
   {
     title: 'B Book',
     author: 'K. Jenkins',
     series: 'So many things',
     rating: null,
-    status: 'new',
+    statuses: ['new'],
   },
 ];
 </script>
