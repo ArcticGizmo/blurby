@@ -1,0 +1,7 @@
+{
+  "name": "blurby",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
