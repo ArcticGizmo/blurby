@@ -1,32 +1,39 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
-import TabsPage from '../views/TabsPage.vue';
+import BooksPage from '@/views/BooksPage.vue';
 
 const routes = [
   {
     path: '/',
-    redirect: '/tabs/tab1',
+    redirect: '/books',
   },
   {
-    path: '/tabs/',
-    component: TabsPage,
-    children: [
-      {
-        path: '',
-        redirect: '/tabs/tab1',
-      },
-      {
-        path: 'tab1',
-        component: () => import('@/views/Tab1Page.vue'),
-      },
-      {
-        path: 'tab2',
-        component: () => import('@/views/Tab2Page.vue'),
-      },
-      {
-        path: 'tab3',
-        component: () => import('@/views/Tab3Page.vue'),
-      },
-    ],
+    path: '/books',
+    name: 'Books',
+    component: BooksPage,
+  },
+  {
+    path: '/goals',
+    name: 'Goals',
+    component: () => import('@/views/GoalsPage.vue'),
+  },
+  {
+    path: '/reading',
+    name: 'Reading',
+    component: () => import('@/views/ReadingPage.vue'),
+  },
+  {
+    path: '/lending',
+    name: 'Lending',
+    component: () => import('@/views/LendingPage.vue'),
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('@/views/ProfilePage.vue'),
+  },
+  {
+    path: '/:catchAll(.*)',
+    redirect: '/books',
   },
 ];
 
