@@ -14,7 +14,7 @@
       <div v-if="value.series" class="series">{{ value.series }}</div>
       <div class="author">{{ value.author }}</div>
     </div>
-    <div class="action">
+    <div class="action" @click="onAction">
       <ion-icon :icon="chevronForward" />
     </div>
   </div>
@@ -37,9 +37,13 @@ const props = defineProps({
   value: Object,
 });
 
+const emit = defineEmits(['action']);
+
 const statuses = computed(() => {
   return (props.value.statuses || []).map(s => STATUS_ICONS[s]).filter(i => i);
 });
+
+const onAction = () => emit('action');
 </script>
 
 <style scoped>
