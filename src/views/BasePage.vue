@@ -1,7 +1,7 @@
 <template>
   <ion-page class="base-page">
     <ion-page>
-      <ion-header :translucent="true">
+      <ion-header :translucent="true" v-if="showHeading">
         <ion-toolbar>
           <ion-buttons slot="start">
             <ion-menu-button color="primary"></ion-menu-button>
@@ -17,19 +17,14 @@
       </ion-content>
 
       <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="tab1" href="/tabs/tab1">
-          <ion-icon :icon="triangle" />
-          <ion-label>Tab 1</ion-label>
-        </ion-tab-button>
-
-        <ion-tab-button tab="tab2" href="/tabs/tab2">
-          <ion-icon :icon="ellipse" />
-          <ion-label>Tab 2</ion-label>
-        </ion-tab-button>
-
-        <ion-tab-button tab="tab3" href="/tabs/tab3">
-          <ion-icon :icon="square" />
-          <ion-label>Tab 3</ion-label>
+        <ion-tab-button
+          v-for="route in routes"
+          :key="route.name"
+          :tab="route.name"
+          :href="route.path"
+        >
+          <ion-icon :icon="route.icon" />
+          <ion-label>{{ route.name }}</ion-label>
         </ion-tab-button>
       </ion-tab-bar>
     </ion-page>
@@ -45,11 +40,25 @@ import {
   IonMenuButton,
   IonTitle,
   IonContent,
+  IonTabBar,
+  IonTabButton,
+  IonIcon,
+  IonLabel,
 } from '@ionic/vue';
 
-import { IonTabBar, IonTabButton, IonIcon, IonLabel } from '@ionic/vue';
+import { library, book, people, golf, settings } from 'ionicons/icons';
 
-import { ellipse, square, triangle } from 'ionicons/icons';
+defineProps({
+  showHeading: Boolean,
+});
+
+const routes = [
+  { name: 'Books', path: '/books', icon: library },
+  { name: 'Goals', path: '/goals', icon: golf },
+  { name: 'Reading', path: '/reading', icon: book },
+  { name: 'Lending', path: '/lending', icon: people },
+  { name: 'Profile', path: '/profile', icon: settings },
+];
 </script>
 
 <style>
