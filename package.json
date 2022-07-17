@@ -27,7 +27,8 @@
     "vee-validate": "^4.6.1",
     "vue": "^3.2.21",
     "vue-router": "^4.0.12",
-    "vue3-circle-progress": "^1.0.7"
+    "vue3-circle-progress": "^1.0.7",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
