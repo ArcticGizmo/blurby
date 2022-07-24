@@ -67,7 +67,7 @@ export function useForm(schema, data, options) {
   };
 
   const validateAll = localOpts => {
-    showErrors.value = localOpts ?? true;
+    showErrors.value = localOpts.showErrors ?? true;
     errors.value = validateSchema(schema, data);
   };
 
@@ -113,6 +113,7 @@ export function useField(name, options) {
 
   const hasErrors = computed(() => errors.value.length > 0);
 
+  // FIX: this does not work correctly
   const validate = o => form.validateField(name, o);
 
   return {

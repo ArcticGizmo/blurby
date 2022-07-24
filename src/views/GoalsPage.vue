@@ -8,9 +8,11 @@
     <div class="errors">
       <pre>{{ errors }}</pre>
     </div> -->
-    <div>{{ showErrors }}</div>
+    <div>Show errors: {{ showErrors }}</div>
 
-    <TextInput name="name" />
+    <br>
+
+    <TextInput name="name" label="name" />
     {{ nameErrors }}
     <button @click="validateName">Validate name</button>
 
