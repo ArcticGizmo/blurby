@@ -1,7 +1,4 @@
-import { ref, inject, provide, computed, isRef, toRefs } from 'vue';
-
-// inject can also me used in the form component to attach to
-// the form
+import { ref, inject, provide, computed, isRef } from 'vue';
 
 function validateSchema(schema, data) {
   const valueData = toValueData(data);
@@ -75,7 +72,9 @@ export function useForm(schema, data, options) {
 
   const errors = ref(baseErrors(schema));
   const showErrors = ref(opts.showErrors ?? false);
-  const hasErrors = computed(() => Object.keys(errors.value).length > 0);
+  const hasErrors = computed(() => {
+    return Object.values(errors.value).some(e => e.hasErrors);
+  });
 
   const validateField = name => {
     const fieldState = validateSchemaField(name, schema, data);
@@ -83,7 +82,7 @@ export function useForm(schema, data, options) {
   };
 
   const validateAll = localOpts => {
-    showErrors.value = localOpts.showErrors ?? true;
+    showErrors.value = localOpts?.showErrors ?? true;
     errors.value = validateSchema(schema, data);
   };
 
@@ -102,8 +101,8 @@ export function useForm(schema, data, options) {
     resetAll,
   };
 
-  // this allows fast binding for components that have useForm and useField
-  // in the same context
+  // this allows fast binding for components that have
+  // useForm and useField in the same context
   form.useField = (name, options) => {
     const opts = options || {};
     opts.form = form;
@@ -125,11 +124,9 @@ export function useField(name, options) {
     throw 'useField must be a child of useForm component, or be provided one through options.form';
   }
 
-  const errors = ref([]);
+  const errors = computed(() => form.errors.value[name]);
+  const hasErrors = computed(() => errors.value.hasErrors);
 
-  const hasErrors = computed(() => errors.value.length > 0);
-
-  // FIX: this does not work correctly
   const validate = o => form.validateField(name, o);
 
   return {
