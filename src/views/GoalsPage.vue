@@ -10,9 +10,11 @@
     </div> -->
     <div>Show errors: {{ showErrors }}</div>
 
-    <br>
+    <br />
 
-    <TextInput name="name" label="name" />
+    {{ name }}
+    <TextInput name="name" label="name" v-model="name" />
+
     {{ nameErrors }}
     <button @click="validateName">Validate name</button>
 
@@ -70,10 +72,14 @@ import TextInput from '@/components/form/TextInput.vue';
 //   errors.value = validate(userSchema, user);
 // };
 
-const data = reactive({
-  name: '',
-  email: '',
-});
+const name = ref('jon');
+const email = ref('');
+const data = { name, email };
+
+// const data = reactive({
+//   name: 'jon',
+//   email: '',
+// });
 
 const schema = yup.object({
   name: yup.string().required(),

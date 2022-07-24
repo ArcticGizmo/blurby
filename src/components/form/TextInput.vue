@@ -1,6 +1,6 @@
 <template>
   <FormField class="text-input" :name="props.name" :label="props.label">
-    <ion-input :value="value" @input="onInput" />
+    <input type="text" :value="props.modelValue" @input="onInput" />
   </FormField>
 </template>
 
@@ -11,17 +11,16 @@ import FormField from './FormField.vue';
 
 const props = defineProps({
   name: { type: String, required: true },
-  value: undefined,
+  modelValue: undefined,
   label: { type: String },
 });
 
-const emits = defineEmits(['modelValue']);
+const emits = defineEmits(['update:modelValue']);
 
 const { validate } = useField(props.name);
 
 const onInput = e => {
-  console.dir(e.target.value);
-  emits('modelValue', e.target.value);
+  emits('update:modelValue', e.target.value);
   validate();
 };
 </script>

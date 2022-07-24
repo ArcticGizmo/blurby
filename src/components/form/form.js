@@ -1,13 +1,14 @@
-import { ref, inject, provide, computed } from 'vue';
+import { ref, inject, provide, computed, isRef, toRefs } from 'vue';
 
 // inject can also me used in the form component to attach to
 // the form
 
 function validateSchema(schema, data) {
+  const valueData = toValueData(data);
   const payload = baseErrors(schema);
 
   try {
-    schema.validateSync(data, { abortEarly: false });
+    schema.validateSync(valueData, { abortEarly: false });
     return payload;
   } catch (error) {
     error.inner.map(parseValidationError).forEach(item => {
@@ -19,11 +20,21 @@ function validateSchema(schema, data) {
   return payload;
 }
 
-function validateSchemaField(schema, value) {
+function toValueData(d) {
+  const data = isRef(d) ? toRefs(d) : d;
+
+  return Object.entries(data).reduce((acc, [key, value]) => {
+    value = isRef(value) ? value.value : value;
+    acc[key] = value;
+    return acc;
+  }, {});
+}
+
+function validateSchemaField(name, schema, value) {
   const payload = { errors: [], hasErrors: false };
 
   try {
-    schema.validateSync(value, { abortEarly: false });
+    schema.validateSyncAt(name, value, { abortEarly: false });
   } catch (error) {
     error.inner.map(parseValidationError).forEach(item => {
       payload.errors.push(item.error);
@@ -61,7 +72,9 @@ export function useForm(schema, data, options) {
   const hasErrors = computed(() => Object.keys(errors.value).length > 0);
 
   const validateField = name => {
-    const fieldState = validateSchemaField(schema.fields[name], data[name]);
+    console.dir('----validate field');
+
+    const fieldState = validateSchemaField(name, schema, data[name]);
 
     errors.value[name] = fieldState;
   };
