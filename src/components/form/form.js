@@ -21,7 +21,7 @@ function validateSchema(schema, data) {
 }
 
 function toValueData(d) {
-  const data = isRef(d) ? toRefs(d) : d;
+  const data = toValue(d);
 
   return Object.entries(data).reduce((acc, [key, value]) => {
     value = isRef(value) ? value.value : value;
@@ -30,11 +30,17 @@ function toValueData(d) {
   }, {});
 }
 
-function validateSchemaField(name, schema, value) {
+function toValue(maybeRef) {
+  return isRef(maybeRef) ? maybeRef.value : maybeRef;
+}
+
+function validateSchemaField(name, schema, rootValue) {
   const payload = { errors: [], hasErrors: false };
 
+  rootValue = toValueData(rootValue);
+
   try {
-    schema.validateSyncAt(name, value, { abortEarly: false });
+    schema.validateSyncAt(name, rootValue, { abortEarly: false });
   } catch (error) {
     error.inner.map(parseValidationError).forEach(item => {
       payload.errors.push(item.error);
@@ -72,10 +78,7 @@ export function useForm(schema, data, options) {
   const hasErrors = computed(() => Object.keys(errors.value).length > 0);
 
   const validateField = name => {
-    console.dir('----validate field');
-
-    const fieldState = validateSchemaField(name, schema, data[name]);
-
+    const fieldState = validateSchemaField(name, schema, data);
     errors.value[name] = fieldState;
   };
 

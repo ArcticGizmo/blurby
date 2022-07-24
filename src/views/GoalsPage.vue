@@ -73,7 +73,7 @@ import TextInput from '@/components/form/TextInput.vue';
 // };
 
 const name = ref('jon');
-const email = ref('');
+const email = ref('a');
 const data = { name, email };
 
 // const data = reactive({
@@ -88,6 +88,8 @@ const schema = yup.object({
   // website: yup.string().url().nullable().label('cheese'),
   // createdOn: yup.date().default(() => new Date()),
 });
+
+schema.validateSyncAt('email', 'apple');
 
 const { errors, validateAll, resetAll, useField, showErrors } = useForm(schema, data, {
   canValidate: true,

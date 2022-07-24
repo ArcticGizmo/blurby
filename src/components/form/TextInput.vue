@@ -10,8 +10,8 @@ import { useField } from './form.js';
 import FormField from './FormField.vue';
 
 const props = defineProps({
-  name: { type: String, required: true },
   modelValue: undefined,
+  name: { type: String, required: true },
   label: { type: String },
 });
 
