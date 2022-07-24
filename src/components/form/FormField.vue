@@ -1,8 +1,14 @@
 <template>
   <div class="form-field">
-    <ion-label v-if="label">{{ label }}</ion-label>
-    <slot></slot>
-    <div class="errors">
+    <div class="field-label">
+      <slot name="label">
+        <ion-label v-if="label" :aria-label="label">{{ label }}</ion-label>
+      </slot>
+    </div>
+    <div class="field-input" :class="{ error: errors.length }">
+      <slot></slot>
+    </div>
+    <div class="field-errors">
       <slot v-if="showErrors && errors.length > 0" name="errors">{{ errors[0] }}</slot>
     </div>
   </div>
@@ -23,13 +29,27 @@ const errors = computed(() => form.errors.value[props.name].errors);
 </script>
 
 <style scoped>
-ion-label {
+.form-field {
   text-align: left;
-  text-transform: uppercase;
+  display: block;
+  margin: 2rem 1rem;
 }
 
-.errors {
-  border: 1px solid red;
-  color: red;
+.form-field ion-label {
+  text-align: left;
+  text-transform: capitalize;
+}
+
+.field-input {
+  margin-top: 0.5rem;
+}
+
+.field-errors {
+  margin-top: 0.5rem;
+  color: #dc3545;
+}
+
+.field-errors::first-letter {
+  text-transform: capitalize;
 }
 </style>
