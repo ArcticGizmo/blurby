@@ -1,14 +1,14 @@
 <template>
-  <FormField class="text-input" :name="props.name" :label="props.label">
+  <FormField class="select-field" :name="props.name" :label="props.label">
     <div class="input">
-      <ion-input type="text" :value="props.modelValue" @input="onInput" v-bind="$attrs" />
+      <ion-select :value="props.modelValue" v-bind="$attrs"><slot></slot></ion-select>
       <ion-icon v-if="hasErrors" :icon="alertCircleOutline" size="large" />
     </div>
   </FormField>
 </template>
 
 <script setup>
-import { IonInput, IonIcon } from '@ionic/vue';
+import { IonInput, IonIcon, IonSelect } from '@ionic/vue';
 import { useField } from './form.js';
 import FormField from './FormField.vue';
 import { alertCircleOutline } from 'ionicons/icons';
@@ -42,8 +42,9 @@ ion-icon {
   color: #dc3545;
 }
 
-ion-input {
+ion-select {
   border: 1px solid gray;
+  padding-left: 0.5rem;
 }
 
 .error ion-input {
