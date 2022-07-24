@@ -63,7 +63,6 @@ const routes = [
 
 <style>
 .base-page .page-container {
-  text-align: center;
   position: absolute;
   left: 0;
   right: 0;
