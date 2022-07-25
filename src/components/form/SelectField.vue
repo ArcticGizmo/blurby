@@ -1,7 +1,9 @@
 <template>
   <FormField class="select-field" :name="props.name" :label="props.label">
     <div class="input">
-      <ion-select :value="props.modelValue" v-bind="$attrs"><slot></slot></ion-select>
+      <ion-select :value="props.modelValue" v-bind="$attrs" @ion-change="onChange"
+        ><slot></slot
+      ></ion-select>
       <ion-icon v-if="hasErrors" :icon="alertCircleOutline" size="large" />
     </div>
   </FormField>
@@ -23,7 +25,7 @@ const emits = defineEmits(['update:modelValue']);
 
 const { validate, hasErrors } = useField(props.name);
 
-const onInput = e => {
+const onChange = e => {
   emits('update:modelValue', e.target.value);
   validate();
 };
@@ -38,7 +40,7 @@ ion-icon {
   position: relative;
   top: -2.25rem;
   float: right;
-  right: 0.25rem;
+  right: 1.25rem;
   color: #dc3545;
 }
 
