@@ -15,6 +15,8 @@
       </ion-select-option>
     </SelectField>
 
+    <DatetimeField name="createdOn" label="Created On" v-model="createdOn" />
+
     <ion-button @click="onSubmit">Submit</ion-button>
 
     <ion-button @click="resetAll">Reset All</ion-button>
@@ -30,12 +32,15 @@ import * as yup from 'yup';
 import { useForm } from '@/components/form/form';
 import TextField from '@/components/form/TextField.vue';
 import SelectField from '@/components/form/SelectField.vue';
+import DatetimeField from '@/components/form/DatetimeField.vue';
 
 const BOOK_TYPES = ['A type', 'B type'];
 
 const name = ref('jon');
 const email = ref('jon@gmail.com');
 const bookType = ref(null);
+const createdOn = ref('2022-01-01T10:30:00');
+
 const data = { name, email };
 
 const schema = yup.object({
@@ -44,7 +49,7 @@ const schema = yup.object({
   email: yup.string().email().required(),
   bookType: yup.string().oneOf(BOOK_TYPES),
   // website: yup.string().url().nullable().label('cheese'),
-  // createdOn: yup.date().default(() => new Date()),
+  createdOn: yup.string(),
 });
 
 const { hasErrors, validateAll, resetAll } = useForm(schema, data, {
