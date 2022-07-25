@@ -9,6 +9,13 @@
 - image capture
   - take picture
   - load from device
+- rating field
+- slider field
+- tag field
+  - should display a list of chips
+  - maybe an auto complete
+- range field
+  - this is the slider component
 
 - dont know if ion-slide will be helpful, but it is cool
 
