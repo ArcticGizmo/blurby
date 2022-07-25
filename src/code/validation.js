@@ -14,9 +14,7 @@ export function validate(schema, data) {
     return payload;
   } catch (error) {
     error.stack = null;
-    console.dir(error);
     const p = error.inner.map(parseValidationError);
-    console.dir(p);
 
     p.forEach(item => {
       payload[item.field].errors.push(item.error);
@@ -29,7 +27,6 @@ export function validate(schema, data) {
 
 function parseValidationError(e) {
   e.stack = null;
-  console.dir(e);
   return {
     field: e.params.path,
     error: e.message,
