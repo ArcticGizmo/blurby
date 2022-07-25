@@ -23,8 +23,12 @@
         <ion-radio slot="start" :value="tag" />
       </ion-item>
     </RadioField>
-    {{ tag }}
 
+    <CheckboxField name="termsAccepted" label="Accept terms of service" v-model="termsAccepted" />
+
+    <br />
+    <br />
+    <br />
     <ion-button @click="onSubmit">Submit</ion-button>
 
     <ion-button @click="resetAll">Reset All</ion-button>
@@ -42,6 +46,7 @@ import TextField from '@/components/form/TextField.vue';
 import SelectField from '@/components/form/SelectField.vue';
 import DatetimeField from '@/components/form/DatetimeField.vue';
 import RadioField from '@/components/form/RadioField.vue';
+import CheckboxField from '@/components/form/CheckboxField.vue';
 
 const BOOK_TYPES = ['A type', 'B type'];
 const TAGS = ['Romance', 'Horror', 'Adventure'];
@@ -51,8 +56,9 @@ const email = ref('jon@gmail.com');
 const bookType = ref(null);
 const tag = ref(null);
 const createdOn = ref('2022-01-01T10:30:00');
+const termsAccepted = ref(null);
 
-const data = { name, email, bookType, tag, createdOn };
+const data = { name, email, bookType, tag, createdOn, termsAccepted };
 
 const schema = yup.object({
   name: yup.string().required(),
@@ -62,6 +68,7 @@ const schema = yup.object({
   // website: yup.string().url().nullable().label('cheese'),
   createdOn: yup.string(),
   tag: yup.string().oneOf(TAGS).required().nullable(),
+  termsAccepted: yup.boolean().required().nullable().isTrue(),
 });
 
 const { hasErrors, validateAll, resetAll } = useForm(schema, data, {
