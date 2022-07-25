@@ -5,6 +5,13 @@
 - goals page
 - profile
 
+# Form Elements
+- image capture
+  - take picture
+  - load from device
+
+- dont know if ion-slide will be helpful, but it is cool
+
 
 # Form inspo
 https://i.pinimg.com/originals/66/07/be/6607beaefc6618d14c4b24f8e0486caa.png

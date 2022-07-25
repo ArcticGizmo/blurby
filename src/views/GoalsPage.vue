@@ -28,6 +28,15 @@
 
     <TextareaField name="review" label="Review" v-model="review" :autoGrow="true" />
 
+    <ToggleField name="showRating" label="Show Rating" v-model="showRating" />
+
+    <SegmentField name="accuracy" label="accuracy" v-model="accuracy">
+      <ion-segment-button v-for="(acc, index) in ACCURACY" :key="index" :value="acc">
+        <ion-label>{{ acc }}</ion-label>
+      </ion-segment-button>
+    </SegmentField>
+    {{ accuracy }}
+
     <br />
     <br />
     <br />
@@ -40,7 +49,14 @@
 <script setup>
 import BasePage from './BasePage.vue';
 import { ref } from 'vue';
-import { IonButton, IonSelectOption, IonRadio, IonItem, IonLabel } from '@ionic/vue';
+import {
+  IonButton,
+  IonSelectOption,
+  IonRadio,
+  IonItem,
+  IonLabel,
+  IonSegmentButton,
+} from '@ionic/vue';
 
 import * as yup from 'yup';
 import { useForm } from '@/components/form/form';
@@ -50,9 +66,12 @@ import DatetimeField from '@/components/form/DatetimeField.vue';
 import RadioField from '@/components/form/RadioField.vue';
 import CheckboxField from '@/components/form/CheckboxField.vue';
 import TextareaField from '@/components/form/TextareaField.vue';
+import ToggleField from '@/components/form/ToggleField.vue';
+import SegmentField from '@/components/form/SegmentField.vue';
 
 const BOOK_TYPES = ['A type', 'B type'];
 const TAGS = ['Romance', 'Horror', 'Adventure'];
+const ACCURACY = ['low', 'medium', 'high'];
 
 const name = ref('jon');
 const email = ref('jon@gmail.com');
@@ -61,8 +80,20 @@ const tag = ref(null);
 const createdOn = ref('2022-01-01T10:30:00');
 const termsAccepted = ref(null);
 const review = ref('');
+const accuracy = ref('low');
+const showRating = ref(false);
 
-const data = { name, email, bookType, tag, createdOn, termsAccepted, review };
+const data = {
+  name,
+  email,
+  bookType,
+  tag,
+  createdOn,
+  termsAccepted,
+  review,
+  showRating,
+  accuracy,
+};
 
 const schema = yup.object({
   name: yup.string().required(),
@@ -73,7 +104,9 @@ const schema = yup.object({
   createdOn: yup.string(),
   tag: yup.string().oneOf(TAGS).required().nullable(),
   termsAccepted: yup.boolean().required().nullable().isTrue(),
+  showRating: yup.boolean().isTrue(),
   review: yup.string().min(30),
+  accuracy: yup.string().oneOf(ACCURACY),
 });
 
 const { hasErrors, validateAll, resetAll } = useForm(schema, data, {
