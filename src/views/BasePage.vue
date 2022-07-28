@@ -62,14 +62,6 @@ const routes = [
 </script>
 
 <style>
-.base-page .page-container {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
 .base-page .page-container strong {
   font-size: 20px;
   line-height: 26px;
