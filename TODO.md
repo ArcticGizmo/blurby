@@ -6,9 +6,6 @@
 - profile
 
 # Form Elements
-- image capture
-  - take picture
-  - load from device
 - rating field
 - slider field
 - tag field
