@@ -17,7 +17,7 @@ import { IonIcon, modalController } from '@ionic/vue';
 import { useField } from './form.js';
 import FormField from './FormField.vue';
 import { alertCircleOutline, calendarOutline } from 'ionicons/icons';
-import DatetimeFieldModal from './DatetimeFieldModal.vue';
+import DatetimeFieldModal from '@/modals/DatetimeFieldModal.vue';
 import { useAttrs } from '@vue/runtime-core';
 
 const attrs = useAttrs();
