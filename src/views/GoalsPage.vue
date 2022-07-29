@@ -1,7 +1,7 @@
 <template>
   <BasePage>
     <TextField name="name" label="Name" v-model="name" />
-    <TextField name="email" label="Email" v-model="email" />
+    <TextField name="email" label="Email" v-model="email" disabled />
 
     <SelectField name="bookType" label="Book Type" v-model="bookType">
       <ion-select-option :value="null"> none </ion-select-option>
@@ -16,6 +16,11 @@
     </SelectField>
 
     <DatetimeField name="createdOn" label="Created On" v-model="createdOn" />
+
+    <RangeField name="volume" label="Volume" v-model="volume" ticks snaps min="5" max="10" pin>
+      <div slot="start">😢</div>
+      <div slot="end">😊</div>
+    </RangeField>
 
     <RatingField name="rating" label="Rating" v-model="rating" />
 
@@ -73,6 +78,7 @@ import ToggleField from '@/components/form/ToggleField.vue';
 import SegmentField from '@/components/form/SegmentField.vue';
 import PictureField from '@/components/form/PictureField.vue';
 import RatingField from '@/components/form/RatingField.vue';
+import RangeField from '@/components/form/RangeField.vue';
 
 const BOOK_TYPES = ['A type', 'B type'];
 const TAGS = ['Romance', 'Horror', 'Adventure'];
@@ -89,6 +95,7 @@ const accuracy = ref('low');
 const showRating = ref(false);
 const picture = ref(null);
 const rating = ref(2);
+const volume = ref(50);
 
 const data = {
   name,
@@ -102,6 +109,7 @@ const data = {
   accuracy,
   picture,
   rating,
+  volume,
 };
 
 const schema = yup.object({
@@ -118,6 +126,7 @@ const schema = yup.object({
   accuracy: yup.string().oneOf(ACCURACY),
   picture: yup.mixed(),
   rating: yup.number().min(0).max(5),
+  volume: yup.number().min(0).max(100),
 });
 
 const { hasErrors, validateAll, resetAll } = useForm(schema, data, {
