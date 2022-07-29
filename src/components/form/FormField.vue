@@ -1,5 +1,5 @@
 <template>
-  <div class="form-field">
+  <div class="form-field" :disabled="disabled">
     <div class="field-label">
       <slot name="label">
         <ion-label v-if="label" :aria-label="label">{{ label }}</ion-label>
@@ -21,6 +21,7 @@ import { computed, inject, toRef } from 'vue';
 const props = defineProps({
   name: { type: String, required: true },
   label: String,
+  disabled: Boolean,
 });
 
 const form = inject('form');
@@ -33,6 +34,11 @@ const errors = computed(() => form.errors.value[props.name].errors);
   text-align: left;
   display: block;
   margin: 2rem 1rem;
+}
+
+.form-field[disabled='true'] {
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 .form-field ion-label {
