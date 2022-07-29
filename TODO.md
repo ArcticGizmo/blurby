@@ -6,13 +6,10 @@
 - profile
 
 # Form Elements
-- rating field
-- slider field
 - tag field
   - should display a list of chips
   - maybe an auto complete
-- range field
-  - this is the slider component
+  - https://www.npmjs.com/package/ionic-selectable
 
 - dont know if ion-slide will be helpful, but it is cool
 

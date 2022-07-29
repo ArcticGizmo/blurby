@@ -5,17 +5,18 @@
 
     <SelectField name="bookType" label="Book Type" v-model="bookType">
       <ion-select-option :value="null"> none </ion-select-option>
-      <ion-select-option
-        v-for="(option, index) in BOOK_TYPES"
-        :key="index"
-        :value="option"
-        placeholder="Apples"
-      >
+      <ion-select-option v-for="(option, index) in BOOK_TYPES" :key="index" :value="option">
         {{ option }}
       </ion-select-option>
     </SelectField>
 
     <DatetimeField name="createdOn" label="Created On" v-model="createdOn" />
+
+    <MultiSelectField name="triggers" label="Triggers" v-model="triggers">
+      <MultiSelectOption v-for="(option, index) in TRIGGERS" :key="index" :value="option">
+        {{ option }}
+      </MultiSelectOption>
+    </MultiSelectField>
 
     <RangeField name="volume" label="Volume" v-model="volume" ticks snaps min="5" max="10" pin>
       <div slot="start">😢</div>
@@ -79,10 +80,13 @@ import SegmentField from '@/components/form/SegmentField.vue';
 import PictureField from '@/components/form/PictureField.vue';
 import RatingField from '@/components/form/RatingField.vue';
 import RangeField from '@/components/form/RangeField.vue';
+import MultiSelectField from '@/components/form/MultiSelectField.vue';
+import MultiSelectOption from '@/components/form/MultiSelectOption.vue';
 
 const BOOK_TYPES = ['A type', 'B type'];
 const TAGS = ['Romance', 'Horror', 'Adventure'];
 const ACCURACY = ['low', 'medium', 'high'];
+const TRIGGERS = ['Bad Stuff', 'Other Bad Stuff', 'Just the worst'];
 
 const name = ref('jon');
 const email = ref('jon@gmail.com');
@@ -96,6 +100,7 @@ const showRating = ref(false);
 const picture = ref(null);
 const rating = ref(2);
 const volume = ref(50);
+const triggers = ref(['Bad Stuff']);
 
 const data = {
   name,
@@ -110,6 +115,7 @@ const data = {
   picture,
   rating,
   volume,
+  triggers,
 };
 
 const schema = yup.object({
@@ -127,6 +133,7 @@ const schema = yup.object({
   picture: yup.mixed(),
   rating: yup.number().min(0).max(5),
   volume: yup.number().min(0).max(100),
+  triggers: yup.array(),
 });
 
 const { hasErrors, validateAll, resetAll } = useForm(schema, data, {

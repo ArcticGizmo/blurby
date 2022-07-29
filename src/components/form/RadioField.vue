@@ -22,7 +22,6 @@ const emits = defineEmits(['update:modelValue']);
 const { validate } = useField(props.name);
 
 const onChange = e => {
-  console.dir(e.target.value);
   emits('update:modelValue', e.target.value);
   validate();
 };
