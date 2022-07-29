@@ -17,7 +17,7 @@
 
     <DatetimeField name="createdOn" label="Created On" v-model="createdOn" />
 
-    <PictureField name="picture" label="Picture" v-model="picture" />
+    <RatingField name="rating" label="Rating" v-model="rating" />
 
     <RadioField name="tag" label="Tag" v-model="tag">
       <ion-item v-for="(tag, index) in TAGS" :key="index">
@@ -37,6 +37,8 @@
         <ion-label>{{ acc }}</ion-label>
       </ion-segment-button>
     </SegmentField>
+
+    <PictureField name="picture" label="Picture" v-model="picture" />
 
     <br />
     <br />
@@ -70,6 +72,7 @@ import TextareaField from '@/components/form/TextareaField.vue';
 import ToggleField from '@/components/form/ToggleField.vue';
 import SegmentField from '@/components/form/SegmentField.vue';
 import PictureField from '@/components/form/PictureField.vue';
+import RatingField from '@/components/form/RatingField.vue';
 
 const BOOK_TYPES = ['A type', 'B type'];
 const TAGS = ['Romance', 'Horror', 'Adventure'];
@@ -85,6 +88,7 @@ const review = ref('');
 const accuracy = ref('low');
 const showRating = ref(false);
 const picture = ref(null);
+const rating = ref(2);
 
 const data = {
   name,
@@ -97,6 +101,7 @@ const data = {
   showRating,
   accuracy,
   picture,
+  rating,
 };
 
 const schema = yup.object({
@@ -112,6 +117,7 @@ const schema = yup.object({
   review: yup.string().min(30),
   accuracy: yup.string().oneOf(ACCURACY),
   picture: yup.mixed(),
+  rating: yup.number().min(0).max(5),
 });
 
 const { hasErrors, validateAll, resetAll } = useForm(schema, data, {
