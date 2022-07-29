@@ -1,9 +1,9 @@
 <template>
   <FormField class="select-field" :name="props.name" :label="props.label">
     <div class="input">
-      <ion-select :value="props.modelValue" v-bind="$attrs" @ion-change="onChange"
-        ><slot></slot
-      ></ion-select>
+      <ion-select :value="props.modelValue" v-bind="$attrs" @ion-change="onChange">
+        <slot></slot>
+      </ion-select>
       <ion-icon v-if="hasErrors" :icon="alertCircleOutline" size="large" />
     </div>
   </FormField>
