@@ -12,7 +12,7 @@
 
     <DatetimeField name="createdOn" label="Created On" v-model="createdOn" />
 
-    <MultiSelectField name="triggers" label="Triggers" v-model="triggers">
+    <MultiSelectField name="triggers" label="Triggers" v-model="triggers" searchable>
       <MultiSelectOption v-for="(option, index) in TRIGGERS" :key="index" :value="option">
         {{ option }}
       </MultiSelectOption>
@@ -86,7 +86,7 @@ import MultiSelectOption from '@/components/form/MultiSelectOption.vue';
 const BOOK_TYPES = ['A type', 'B type'];
 const TAGS = ['Romance', 'Horror', 'Adventure'];
 const ACCURACY = ['low', 'medium', 'high'];
-const TRIGGERS = ['Bad Stuff', 'Other Bad Stuff', 'Just the worst'];
+const TRIGGERS = ['Bad Stuff', 'Other Bad Stuff', 'Just the worst', 'Like some really terrible stuff'];
 
 const name = ref('jon');
 const email = ref('jon@gmail.com');
