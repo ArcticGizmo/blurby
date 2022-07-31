@@ -1,6 +1,15 @@
 <template>
   <FormField class="multi-select-field" :name="props.name" :label="props.label">
-    <div class="items" @click="onOpen">This is where the items are</div>
+    <div class="items" @click="onOpen">
+      <div v-if="modelValue.length === 0" class="placeholder" @click="onOpen">
+        <slot name="placeholder"> {{ placeholder }} </slot>
+      </div>
+      <template v-else>
+        <div class="item" v-for="(value, index) in props.modelValue" :key="index">
+          <slot name="item" v-bind="{ value, index }">{{ value }}</slot>
+        </div>
+      </template>
+    </div>
   </FormField>
 </template>
 
@@ -15,6 +24,8 @@ const props = defineProps({
   name: { type: String, required: true },
   label: String,
   placeholder: { type: String, default: 'Select' },
+  searchable: Boolean,
+  searchProps: { type: Object, default: () => ({}) },
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -37,6 +48,8 @@ const onOpen = async () => {
   const modal = await modalController.create({
     component: MultiSelectFieldModal,
     componentProps: {
+      ...(props.searchProps || {}),
+      searchable: props.searchable,
       modelValue: props.modelValue,
       slots: useableSlots.value,
     },
@@ -45,7 +58,6 @@ const onOpen = async () => {
   const { role, data } = await modal.onDidDismiss();
 
   if (role === 'submit') {
-    console.dir('--- submit')
     emit('update:modelValue', data);
   }
 };
@@ -53,9 +65,27 @@ const onOpen = async () => {
 
 <style scoped>
 .items {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  line-height: 2rem;
   border: 1px solid gray;
-  min-height: 2.5rem;
-  line-height: 2.5rem;
+  min-height: 2rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.placeholder {
+  border: 1px solid transparent;
+  color: gray;
+  font-style: italic;
+  margin: 0.1rem;
+}
+
+.item {
+  border: 1px solid orange;
   padding: 0 0.5rem;
+  margin: 0.1rem;
+  border-radius: 10px;
+  background-color: orange;
 }
 </style>

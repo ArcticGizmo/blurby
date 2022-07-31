@@ -25,7 +25,6 @@ const emits = defineEmits(['update:modelValue']);
 const { validate } = useField(props.name);
 
 const onToggle = () => {
-  console.dir('---on toggle');
   emits('update:modelValue', !props.modelValue);
   validate();
 };
